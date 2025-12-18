@@ -11,9 +11,7 @@ import 'package:honest/routes/app_routes.dart';
 
 class AppPages {
   AppPages._();
-
   static const inital = Routes.splash;
-
   static final routes = [
     GetPage(
       name: Routes.splash,
@@ -35,6 +33,5 @@ class AppPages {
       page: () => const ProfileView(),
       binding: ProfileBinding(),
     ),
-
   ];
 }
