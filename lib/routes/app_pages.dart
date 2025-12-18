@@ -11,7 +11,7 @@ import 'package:honest/routes/app_routes.dart';
 
 class AppPages {
   AppPages._();
-  static const inital = Routes.splash;
+  static const initial = Routes.splash;
   static final routes = [
     GetPage(
       name: Routes.splash,
