@@ -5,6 +5,15 @@ import 'app_colors.dart';
 class AppTextStyles {
   AppTextStyles._();
 
+    // Headings
+  static TextStyle splash = TextStyle(
+    fontSize: 36.sp,
+    fontWeight: FontWeight.bold,
+    color: AppColors.textPrimary,
+    letterSpacing: 1.5,
+  );
+
+
   // Headings
   static TextStyle h1 = TextStyle(
     fontSize: 32.sp,
