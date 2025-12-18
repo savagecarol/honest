@@ -7,7 +7,7 @@ class AppTextStyles {
 
     // Headings
   static TextStyle splash = TextStyle(
-    fontSize: 36.sp,
+    fontSize: 42.sp,
     fontWeight: FontWeight.bold,
     color: AppColors.textPrimary,
     letterSpacing: 1.5,

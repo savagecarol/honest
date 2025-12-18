@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:honest/core/app_theme.dart';
+import 'package:honest/core/themes/app_theme.dart';
 import 'package:honest/routes/app_pages.dart';
 import 'package:honest/routes/app_routes.dart';
+import 'package:honest/services/auth_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -12,6 +13,8 @@ void main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+
+  Get.put<AuthService>(AuthService(), permanent: true);
 
   runApp(const MyApp());
 }
@@ -29,7 +32,7 @@ class MyApp extends StatelessWidget {
           theme: AppTheme.theme,
           debugShowCheckedModeBanner: false,
           initialRoute: Routes.splash,
-          getPages: AppPages.routes,
+          getPages: AppPages.routes
       ),
     );
   }
