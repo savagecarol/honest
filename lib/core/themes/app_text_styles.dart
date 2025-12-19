@@ -8,6 +8,7 @@ class AppTextStyles {
     // Headings
   static TextStyle splash = TextStyle(
     fontSize: 42.sp,
+    fontFamily: 'Poppins',
     fontWeight: FontWeight.bold,
     color: AppColors.textPrimary,
     letterSpacing: 1.5,
@@ -17,6 +18,7 @@ class AppTextStyles {
   // Headings
   static TextStyle h1 = TextStyle(
     fontSize: 32.sp,
+    fontFamily: 'Poppins',
     fontWeight: FontWeight.bold,
     color: AppColors.textPrimary,
     letterSpacing: -0.5,
@@ -24,6 +26,7 @@ class AppTextStyles {
 
   static TextStyle h2 = TextStyle(
     fontSize: 28.sp,
+    fontFamily: 'Poppins',
     fontWeight: FontWeight.bold,
     color: AppColors.textPrimary,
     letterSpacing: -0.5,
@@ -31,18 +34,21 @@ class AppTextStyles {
 
   static TextStyle h3 = TextStyle(
     fontSize: 24.sp,
+    fontFamily: 'Poppins',
     fontWeight: FontWeight.bold,
     color: AppColors.textPrimary,
   );
 
   static TextStyle h4 = TextStyle(
     fontSize: 20.sp,
+    fontFamily: 'Poppins',
     fontWeight: FontWeight.w600,
     color: AppColors.textPrimary,
   );
 
   static TextStyle h5 = TextStyle(
     fontSize: 18.sp,
+    fontFamily: 'Poppins',
     fontWeight: FontWeight.w600,
     color: AppColors.textPrimary,
   );
@@ -56,6 +62,7 @@ class AppTextStyles {
   // Body Text
   static TextStyle bodyLarge = TextStyle(
     fontSize: 16.sp,
+    fontFamily: 'Poppins',
     fontWeight: FontWeight.normal,
     color: AppColors.textPrimary,
     height: 1.5,
@@ -63,6 +70,7 @@ class AppTextStyles {
 
   static TextStyle bodyMedium = TextStyle(
     fontSize: 14.sp,
+    fontFamily: 'Poppins',
     fontWeight: FontWeight.normal,
     color: AppColors.textPrimary,
     height: 1.5,
@@ -70,6 +78,7 @@ class AppTextStyles {
 
   static TextStyle bodySmall = TextStyle(
     fontSize: 12.sp,
+    fontFamily: 'Poppins',
     fontWeight: FontWeight.normal,
     color: AppColors.textSecondary,
     height: 1.5,
@@ -84,6 +93,7 @@ class AppTextStyles {
 
   static TextStyle button = TextStyle(
     fontSize: 16.sp,
+        fontFamily: 'Poppins',
     fontWeight: FontWeight.w600,
     color: AppColors.textWhite,
     letterSpacing: 0.5,
@@ -92,6 +102,7 @@ class AppTextStyles {
   static TextStyle overline = TextStyle(
     fontSize: 10.sp,
     fontWeight: FontWeight.w500,
+        fontFamily: 'Poppins',
     color: AppColors.textSecondary,
     letterSpacing: 1.5,
     height: 1.5,
@@ -100,6 +111,7 @@ class AppTextStyles {
   // Link
   static TextStyle link = TextStyle(
     fontSize: 14.sp,
+        fontFamily: 'Poppins',
     fontWeight: FontWeight.w500,
     color: AppColors.primary,
     decoration: TextDecoration.underline,
@@ -107,8 +119,9 @@ class AppTextStyles {
 
   // Error
   static TextStyle error = TextStyle(
-    fontSize: 12.sp,
-    fontWeight: FontWeight.normal,
+    fontSize: 14.sp,
+        fontFamily: 'Poppins',
+    fontWeight: FontWeight.w500,
     color: AppColors.error,
   );
 }

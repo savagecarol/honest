@@ -1,8 +1,9 @@
 import 'package:get/get.dart';
+import 'package:honest/core/custom/cusom_function.dart';
+import 'package:honest/routes/app_routes.dart';
 import 'package:honest/services/auth_service.dart';
 
-class AuthController extends GetxController  {
-
+class AuthController extends GetxController {
   final AuthService _authService = Get.find<AuthService>();
 
   RxBool isSigningIn = false.obs;
@@ -11,11 +12,15 @@ class AuthController extends GetxController  {
     try {
       isSigningIn.value = true;
       await _authService.signInWithGoogle();
+      if (_authService.currentUser != null) {
+        Get.offAllNamed(Routes.home);
+      } else {
+        Get.offAllNamed(Routes.signIn);
+      }
     } catch (e) {
-      Get.snackbar('Login Failed', 'Google sign-in failed');
+      showErrorSnackbar('Login Failed', 'Google sign-in failed');
     } finally {
       isSigningIn.value = false;
     }
   }
-
 }

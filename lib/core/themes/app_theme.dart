@@ -11,6 +11,7 @@ class AppTheme {
     return ThemeData(
       // Use Material 3
       useMaterial3: true,
+      fontFamily: 'Poppins',
 
       // Color Scheme
       colorScheme: ColorScheme.light(
