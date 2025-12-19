@@ -10,7 +10,7 @@ class AppTextStyles {
     fontSize: 42.sp,
     fontFamily: 'Poppins',
     fontWeight: FontWeight.bold,
-    color: AppColors.textPrimary,
+    color: AppColors.textWhite,
     letterSpacing: 1.5,
   );
 
@@ -20,7 +20,7 @@ class AppTextStyles {
     fontSize: 32.sp,
     fontFamily: 'Poppins',
     fontWeight: FontWeight.bold,
-    color: AppColors.textPrimary,
+    color: AppColors.textWhite,
     letterSpacing: -0.5,
   );
 
@@ -28,7 +28,7 @@ class AppTextStyles {
     fontSize: 28.sp,
     fontFamily: 'Poppins',
     fontWeight: FontWeight.bold,
-    color: AppColors.textPrimary,
+    color: AppColors.textWhite,
     letterSpacing: -0.5,
   );
 
@@ -36,43 +36,43 @@ class AppTextStyles {
     fontSize: 24.sp,
     fontFamily: 'Poppins',
     fontWeight: FontWeight.bold,
-    color: AppColors.textPrimary,
+    color: AppColors.textWhite,
   );
 
   static TextStyle h4 = TextStyle(
     fontSize: 20.sp,
     fontFamily: 'Poppins',
     fontWeight: FontWeight.w600,
-    color: AppColors.textPrimary,
+    color: AppColors.textWhite,
   );
 
   static TextStyle h5 = TextStyle(
     fontSize: 18.sp,
     fontFamily: 'Poppins',
     fontWeight: FontWeight.w600,
-    color: AppColors.textPrimary,
+    color: AppColors.textWhite,
   );
 
   static TextStyle h6 = TextStyle(
     fontSize: 16.sp,
     fontWeight: FontWeight.w600,
-    color: AppColors.textPrimary,
+    color: AppColors.textWhite,
   );
 
   // Body Text
   static TextStyle bodyLarge = TextStyle(
     fontSize: 16.sp,
     fontFamily: 'Poppins',
-    fontWeight: FontWeight.normal,
-    color: AppColors.textPrimary,
+    fontWeight: FontWeight.bold,
+    color: AppColors.textWhite,
     height: 1.5,
   );
 
   static TextStyle bodyMedium = TextStyle(
     fontSize: 14.sp,
     fontFamily: 'Poppins',
-    fontWeight: FontWeight.normal,
-    color: AppColors.textPrimary,
+    fontWeight: FontWeight.bold,
+    color: AppColors.textWhite,
     height: 1.5,
   );
 

@@ -1,6 +1,6 @@
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
-import 'package:honest/modules/base/home_controller.dart';
+import 'package:honest/modules/home/home_controller.dart';
 
 
 class HomeBinding extends Bindings{

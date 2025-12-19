@@ -15,7 +15,7 @@ class BaseController extends GetxController {
     pageController = PageController(initialPage: 0);
     _loadUser();
   }
-  
+
   @override
   void onClose() {
     pageController.dispose();
@@ -24,7 +24,11 @@ class BaseController extends GetxController {
 
   void changeIndex(int index) {
     currentIndex.value = index;
-    pageController.jumpToPage(index); 
+    pageController.animateToPage(
+      index,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
   }
 
   Future<void> _loadUser() async {
@@ -33,9 +37,14 @@ class BaseController extends GetxController {
       user.value = AppUser(
         uid: firebaseUser.uid,
         email: firebaseUser.email ?? '',
-        name: firebaseUser.displayName ?? 'No Name',
+        name: firebaseUser.displayName,
+        photoUrl: firebaseUser.photoURL,
         createdAt: DateTime.now(),
       );
     }
+  }
+
+  Future<void> refreshUser() async {
+    await _loadUser();
   }
 }

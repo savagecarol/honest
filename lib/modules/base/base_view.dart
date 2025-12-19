@@ -14,37 +14,22 @@ class BaseView extends GetView<BaseController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.primary, // Set scaffold background
+      backgroundColor: AppColors.primary,
       body: SafeArea(
-        bottom: false, // Allow bottom bar to float over safe area
+        bottom: false,
         child: Stack(
           children: [
-            // Main content with gradient
-            Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    AppColors.primary,
-                    AppColors.primary.withOpacity(0.6),
-                  ],
-                ),
-              ),
-              child: Obx(
-                () => IndexedStack(
-                  index: controller.currentIndex.value,
-                  children: const [
-                    HomeView(),
-                    AddView(),
-                    TaskView(),
-                    ProfileView(),
-                  ],
-                ),
-              ),
+            PageView(
+              controller: controller.pageController,
+              physics: const NeverScrollableScrollPhysics(),
+              onPageChanged: (index) => controller.currentIndex.value = index,
+              children: const [
+                HomeView(),
+                AddView(),
+                TaskView(),
+                ProfileView(),
+              ],
             ),
-            // Floating bottom bar
             Positioned(
               left: 0,
               right: 0,
