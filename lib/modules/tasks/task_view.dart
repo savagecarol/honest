@@ -14,36 +14,36 @@ class  TaskView extends GetView<TaskController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                AppColors.primary,
-                AppColors.primary.withOpacity(0.6),
-              ],
-            ),
+        width: double.infinity,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              AppColors.primary,
+              AppColors.primary.withOpacity(0.6),
+            ],
           ),
-          child: SafeArea(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Shimmer.fromColors(
-                  baseColor: Colors.white,
-                  highlightColor: Colors.white.withOpacity(0.4),
-                  child: Column(
-                    children: [
-                      Text(
-                        'Honest',
-                        style: AppTextStyles.splash
-                      ),
-                    ],
-                  ),
+        ),
+        child: SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Shimmer.fromColors(
+                baseColor: Colors.white,
+                highlightColor: Colors.white.withOpacity(0.4),
+                child: Column(
+                  children: [
+                    Text(
+                      'Honest',
+                      style: AppTextStyles.splash
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
+        ),
       ),
     );
   }

@@ -37,7 +37,21 @@ class AuthView extends GetView<AuthController> {
                   ),
                 ),
 
-                  Obx(() {  return controller.isSigningIn.value ? const CircularProgressIndicator() : CustomButton(
+                  Obx(() {  return controller.isSigningIn.value ? 
+                  
+                  
+
+
+                   CustomButton(
+                          isLoading: true,
+                          color: AppColors.textPrimary,
+                          label: 'Creating Task...',
+                          onTap: (){})
+                  
+                  
+                  
+                  
+                  : CustomButton(
                     color: AppColors.textPrimary,
                     label: 'Sign In With Google',
                     onTap: () async {

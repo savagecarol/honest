@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:honest/core/themes/app_colors.dart';
 
 class CustomButton extends StatelessWidget {
+  final bool isLoading;
   final Color color;
   final Widget? preIcon;
   final String label;
@@ -11,6 +13,7 @@ class CustomButton extends StatelessWidget {
 
   const CustomButton({
     Key? key,
+    this.isLoading = false,
     required this.color,
     this.preIcon,
     required this.label,
@@ -25,32 +28,25 @@ class CustomButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
         width: double.infinity,
-        padding: padding ??
-            EdgeInsets.symmetric(
-              vertical: 8.h,
-              horizontal: 12.w,
-            ),
-        decoration: BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.circular(borderRadius.r),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.15),
-              blurRadius: 4.r,
-              offset: Offset(0, 2.h),
-            )
-          ],
-        ),
-        child: Row(
+        padding:
+            padding ?? EdgeInsets.symmetric(vertical: 8.h, horizontal: 12.w),
+      decoration: BoxDecoration(
+        color: AppColors.textPrimary,
+        borderRadius: BorderRadius.circular(24.r),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.15),
+            blurRadius: 10.r,
+            offset: Offset(0, 4.h),
+          ),
+        ],
+      ),
+        child: isLoading? Center(child: CircularProgressIndicator(   color: Colors.white,)) : Row(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             if (preIcon != null) ...[
-              SizedBox(
-                height: 24.h,
-                width: 24.w,
-                child: preIcon,
-              ),
+              SizedBox(height: 24.h, width: 24.w, child: preIcon),
               SizedBox(width: 8.w),
             ],
             Text(
@@ -62,8 +58,7 @@ class CustomButton extends StatelessWidget {
               ),
             ),
           ],
-        ),
-      ),
-    );
+        )
+      ));
   }
 }

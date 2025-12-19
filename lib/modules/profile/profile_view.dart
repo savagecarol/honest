@@ -6,27 +6,26 @@ import 'package:honest/core/themes/app_colors.dart';
 import 'package:honest/core/themes/app_text_styles.dart';
 import 'package:honest/modules/profile/profile_controller.dart';
 import 'package:shimmer/shimmer.dart';
-
 class ProfileView extends GetView<ProfileController> {
   const ProfileView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-         decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
+    return Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+           colors: [
                 AppColors.primary,
                 AppColors.primary.withOpacity(0.6),
               ],
-            ),
           ),
-        width: double.infinity,
+        ),
         child: Obx(() {
           final user = controller.user.value;
+          
           if (user == null) {
             return Padding(
               padding: EdgeInsets.all(16.w),
@@ -72,7 +71,7 @@ class ProfileView extends GetView<ProfileController> {
               ),
             );
           }
-
+      
           return Column(
             children: [
               Expanded(
@@ -123,16 +122,18 @@ class ProfileView extends GetView<ProfileController> {
                 padding: EdgeInsets.only(
                   left: 16.w,
                   right: 16.w,
-                  bottom: 120.h, // Space for bottom navigation bar
+                  bottom: 100.h, // Space for bottom navigation bar
                   top: 16.h,
                 ),
                 child: Obx(() {
                   return controller.isLoading.value
-                      ? const Center(
-                          child: CircularProgressIndicator(
-                            color: Colors.white,
-                          ),
-                        )
+                      ? 
+                   CustomButton(
+                          isLoading: true,
+                          color: AppColors.textPrimary,
+                          label: 'Creating Task...',
+                          onTap: (){})
+                
                       : CustomButton(
                           color: AppColors.textPrimary,
                           label: 'Sign Out',
@@ -145,7 +146,6 @@ class ProfileView extends GetView<ProfileController> {
             ],
           );
         }),
-      ),
     );
   }
 }

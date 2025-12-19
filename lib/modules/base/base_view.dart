@@ -14,6 +14,7 @@ class BaseView extends GetView<BaseController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: AppColors.primary,
       body: SafeArea(
         bottom: false,

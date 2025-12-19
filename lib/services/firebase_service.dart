@@ -5,6 +5,12 @@ class FirebaseService extends GetxService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   Future<User?> getUser() async {
-      return _auth.currentUser;
+    return _auth.currentUser;
   }
+
+  String? getCurrentUserId() {
+    return _auth.currentUser?.uid;
+  }
+
+  Stream<User?> get authStateChanges => _auth.authStateChanges();
 }

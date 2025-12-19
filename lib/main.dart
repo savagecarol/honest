@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:honest/core/themes/app_theme.dart';
 import 'package:honest/routes/app_pages.dart';
 import 'package:honest/routes/app_routes.dart';
+import 'package:honest/services/Firestore_service.dart';
 import 'package:honest/services/auth_service.dart';
 import 'package:honest/services/firebase_service.dart';
 
@@ -18,6 +19,7 @@ void main() async {
   ]);
   Get.put<AuthService>(AuthService(), permanent: true);
   Get.put<FirebaseService>(FirebaseService(), permanent: true);
+  Get.put<FirestoreService>(FirestoreService(), permanent: true);
   runApp(const MyApp());
 }
 
