@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 import 'package:honest/modules/auth/auth_binding.dart';
 import 'package:honest/modules/auth/auth_view.dart';
-import 'package:honest/modules/home/home_binding.dart';
-import 'package:honest/modules/home/home_view.dart';
+import 'package:honest/modules/base/base_binding.dart';
+import 'package:honest/modules/base/base_view.dart';
 import 'package:honest/modules/profile/profile_binding.dart';
 import 'package:honest/modules/profile/profile_view.dart';
 import 'package:honest/modules/splash/splash_binding.dart';
@@ -24,9 +24,9 @@ class AppPages {
       binding: AuthBinding(),
     ),
     GetPage(
-      name: Routes.home,
-      page: () => const HomeView(),
-      binding: HomeBinding(),
+      name: Routes.base,
+      page: () => const BaseView(),
+      binding: BaseBinding(),
     ),
     GetPage(
       name: Routes.profile,

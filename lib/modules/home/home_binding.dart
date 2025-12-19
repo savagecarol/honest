@@ -1,9 +1,12 @@
+import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
+import 'package:honest/modules/base/home_controller.dart';
 
-class HomeBinding extends Bindings {
+
+class HomeBinding extends Bindings{
   @override
   void dependencies() {
-    // TODO: implement dependencies
+    debugPrint('HomeBinding dependencies called');
+    Get.put<HomeController>(HomeController());
   }
-
 }

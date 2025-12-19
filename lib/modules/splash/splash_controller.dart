@@ -16,7 +16,7 @@ class SplashController extends GetxController {
   void _handleAuthState() async {
     await Future.delayed(const Duration(milliseconds: 1000));
     if (_authService.currentUser != null) {
-      Get.offAllNamed(Routes.home);
+      Get.offAllNamed(Routes.base);
     } else {
       Get.offAllNamed(Routes.signIn);
     }

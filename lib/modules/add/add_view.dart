@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:honest/core/themes/app_colors.dart';
 import 'package:honest/core/themes/app_text_styles.dart';
-import 'package:honest/modules/home/home_controller.dart';
+import 'package:honest/modules/add/add_controller.dart';
 import 'package:shimmer/shimmer.dart';
 
-class HomeView extends GetView<HomeController> {
-  const HomeView({super.key});
+class  AddView extends GetView<AddController> {
+  const AddView({super.key});
 
   @override
   Widget build(BuildContext context) {

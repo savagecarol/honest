@@ -7,6 +7,7 @@ import 'package:honest/core/themes/app_theme.dart';
 import 'package:honest/routes/app_pages.dart';
 import 'package:honest/routes/app_routes.dart';
 import 'package:honest/services/auth_service.dart';
+import 'package:honest/services/firebase_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,6 +17,7 @@ void main() async {
     DeviceOrientation.portraitDown,
   ]);
   Get.put<AuthService>(AuthService(), permanent: true);
+  Get.put<FirebaseService>(FirebaseService(), permanent: true);
   runApp(const MyApp());
 }
 

@@ -13,7 +13,7 @@ class AuthController extends GetxController {
       isSigningIn.value = true;
       await _authService.signInWithGoogle();
       if (_authService.currentUser != null) {
-        Get.offAllNamed(Routes.home);
+        Get.offAllNamed(Routes.base);
       } else {
         Get.offAllNamed(Routes.signIn);
       }
