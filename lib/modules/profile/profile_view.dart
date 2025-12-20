@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:honest/core/custom/custom_button.dart';
+import 'package:honest/core/custom/custom_icon_box.dart';
 import 'package:honest/core/themes/app_colors.dart';
 import 'package:honest/core/themes/app_text_styles.dart';
 import 'package:honest/modules/profile/profile_controller.dart';
@@ -113,6 +114,12 @@ class ProfileView extends GetView<ProfileController> {
                           color: Colors.white.withOpacity(0.8),
                         ),
                       ),
+                      SizedBox(height: 12.h),
+                      CustomIconBox(text: 'Friends', icon: Icons.arrow_forward_ios, onPressed: (){}),
+                      SizedBox(height: 16.h),
+                      CustomIconBox(text: 'Rating', icon: Icons.arrow_forward_ios, onPressed: (){}),
+                      SizedBox(height: 16.h),
+                      CustomIconBox(text: 'Terms And Condition', icon: Icons.arrow_forward_ios, onPressed: (){})
                     ],
                   ),
                 ),
@@ -124,7 +131,7 @@ class ProfileView extends GetView<ProfileController> {
                   right: 16.w,
                   bottom: 100.h, // Space for bottom navigation bar
                   top: 16.h,
-                ),
+                ),              
                 child: Obx(() {
                   return controller.isLoading.value
                       ? 

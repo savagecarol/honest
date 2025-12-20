@@ -10,8 +10,8 @@ class CustomBottomBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final BaseController controller = Get.find<BaseController>();
     return Container(
-      margin: EdgeInsets.all(16.w),
-      padding: EdgeInsets.symmetric(vertical: 12.h),
+      margin: EdgeInsets.symmetric(vertical: 20.h,horizontal: 12.w),
+      padding: EdgeInsets.symmetric(vertical: 16.h),
       decoration: BoxDecoration(
         color: AppColors.textPrimary,
         borderRadius: BorderRadius.circular(24.r),

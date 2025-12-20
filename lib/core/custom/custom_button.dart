@@ -30,35 +30,51 @@ class CustomButton extends StatelessWidget {
         width: double.infinity,
         padding:
             padding ?? EdgeInsets.symmetric(vertical: 8.h, horizontal: 12.w),
-      decoration: BoxDecoration(
-        color: AppColors.textPrimary,
-        borderRadius: BorderRadius.circular(24.r),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.15),
-            blurRadius: 10.r,
-            offset: Offset(0, 4.h),
-          ),
-        ],
-      ),
-        child: isLoading? Center(child: CircularProgressIndicator(   color: Colors.white,)) : Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (preIcon != null) ...[
-              SizedBox(height: 24.h, width: 24.w, child: preIcon),
-              SizedBox(width: 8.w),
-            ],
-            Text(
-              label,
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 16.sp,
-              ),
+        decoration: BoxDecoration(
+          color: AppColors.textPrimary,
+          borderRadius: BorderRadius.circular(24.r),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.15),
+              blurRadius: 10.r,
+              offset: Offset(0, 4.h),
             ),
           ],
-        )
-      ));
+        ),
+        child:
+            isLoading
+                ? Center(
+                  child: Padding(
+                    padding: EdgeInsetsGeometry.all(4),
+                    child: SizedBox(
+                      height: 16.h,
+                      width: 16.h,
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                        strokeWidth: 4,
+                      ),
+                    ),
+                  ),
+                )
+                : Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    if (preIcon != null) ...[
+                      SizedBox(height: 24.h, width: 24.w, child: preIcon),
+                      SizedBox(width: 8.w),
+                    ],
+                    Text(
+                      label,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16.sp,
+                      ),
+                    ),
+                  ],
+                ),
+      ),
+    );
   }
 }
