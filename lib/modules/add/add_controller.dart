@@ -1,8 +1,9 @@
 
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:honest/core/custom/cusom_function.dart';
 import 'package:honest/models/task.dart';
-import 'package:honest/services/Firestore_service.dart';
+import 'package:honest/services/firestore_service.dart';
 import 'package:honest/services/firebase_service.dart';
 
 
@@ -60,22 +61,19 @@ class AddController extends GetxController {
   }
 
   Future<void> submitTask() async {
-    // Validation
     if (titleController.text.trim().isEmpty) {
-      Get.snackbar(
+      showErrorSnackbar(
         'Error',
         'Please enter a title',
-        snackPosition: SnackPosition.BOTTOM,
       );
       return;
     }
 
     final userId = _firebaseService.getCurrentUserId();
     if (userId == null) {
-      Get.snackbar(
+      showErrorSnackbar(
         'Error',
-        'User not authenticated',
-        snackPosition: SnackPosition.BOTTOM,
+        'User not authenticated'
       );
       return;
     }
@@ -84,7 +82,7 @@ class AddController extends GetxController {
 
     try {
       final task = Task(
-        uid: '', // Will be set by Firestore
+        uid: '',
         userId: userId,
         title: titleController.text.trim(),
         description: descriptionController.text.trim().isEmpty 
@@ -101,10 +99,9 @@ class AddController extends GetxController {
       final result = await _firestoreService.createTask(task);
 
       if (result != null) {
-        Get.snackbar(
+        showErrorSnackbar(
           'Success',
-          'Task created successfully!',
-          snackPosition: SnackPosition.BOTTOM,
+          'Task created successfully!'
         );
         
         // Clear form

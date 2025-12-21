@@ -30,6 +30,7 @@ dependencies:
   flutter_svg: ^2.2.3
   google_sign_in: ^6.2.1
   cloud_firestore: ^6.1.1
+  timeago: ^3.6.1
 
 
 dev_dependencies:

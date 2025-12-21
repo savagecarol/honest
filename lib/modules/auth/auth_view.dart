@@ -9,7 +9,6 @@ import 'package:shimmer/shimmer.dart';
 
 class AuthView extends GetView<AuthController> {
   const AuthView({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,21 +35,12 @@ class AuthView extends GetView<AuthController> {
                     ),
                   ),
                 ),
-
                   Obx(() {  return controller.isSigningIn.value ? 
-                  
-                  
-
-
                    CustomButton(
                           isLoading: true,
                           color: AppColors.textPrimary,
                           label: 'Creating Task...',
-                          onTap: (){})
-                  
-                  
-                  
-                  
+                          onTap: (){})         
                   : CustomButton(
                     color: AppColors.textPrimary,
                     label: 'Sign In With Google',

@@ -124,12 +124,11 @@ class ProfileView extends GetView<ProfileController> {
                   ),
                 ),
               ),
-              // Sign Out button pinned at bottom above nav bar
               Padding(
                 padding: EdgeInsets.only(
                   left: 16.w,
                   right: 16.w,
-                  bottom: 100.h, // Space for bottom navigation bar
+                  bottom: 100.h, 
                   top: 16.h,
                 ),              
                 child: Obx(() {

@@ -13,6 +13,9 @@ AppUser _$AppUserFromJson(Map<String, dynamic> json) => AppUser(
   photoUrl: json['photoUrl'] as String?,
   role: json['role'] as String? ?? 'user',
   createdAt: DateTime.parse(json['createdAt'] as String),
+  friends:
+      (json['friends'] as List<dynamic>?)?.map((e) => e as String).toList() ??
+      const [],
 );
 
 Map<String, dynamic> _$AppUserToJson(AppUser instance) => <String, dynamic>{
@@ -22,4 +25,5 @@ Map<String, dynamic> _$AppUserToJson(AppUser instance) => <String, dynamic>{
   'photoUrl': instance.photoUrl,
   'role': instance.role,
   'createdAt': instance.createdAt.toIso8601String(),
+  'friends': instance.friends,
 };

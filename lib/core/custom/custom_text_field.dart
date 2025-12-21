@@ -43,16 +43,12 @@ class CustomTextField extends StatefulWidget {
 }
 
 class _CustomTextFieldState extends State<CustomTextField> {
-  bool _isFocused = false;
   final FocusNode _focusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
     _focusNode.addListener(() {
-      setState(() {
-        _isFocused = _focusNode.hasFocus;
-      });
     });
   }
 
@@ -73,7 +69,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
             widget.labelText!,
             style: TextStyle(
               color: Colors.white,
-              fontWeight: FontWeight.w600,
+              fontWeight: FontWeight.w400,
               fontSize: 14.sp,
             ),
           ),

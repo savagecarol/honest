@@ -15,7 +15,7 @@ void showErrorSnackbar(String title, String message,{SnackPosition position = Sn
     margin: const EdgeInsets.all(16),
     borderRadius: 5.sp,
     duration: const Duration(seconds: 2),
-    titleText: Text(title,style: AppTextStyles.bodyMedium),
+    titleText: Text(title,style: AppTextStyles.bodyMedium.copyWith(color: AppColors.textPrimary)),
     messageText:Text(message,style: AppTextStyles.error),
   );
 }
