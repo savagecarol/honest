@@ -8,119 +8,125 @@ class FirestoreService extends GetxService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   static const String tasksCollection = 'tasks';
   static const String usersCollection = 'users';
+    static const String detailsCollection = 'details';
   static const int maxFriends = 20;
 
   Future<List<Task>> getActiveTasks(String userId) async {
-  try {
-    final snapshot = await _firestore
+    try {
+      final snapshot =
+          await _firestore
+              .collection(tasksCollection)
+              .where('userId', isEqualTo: userId)
+              .get();
+
+      // Filter and sort in code
+      final tasks =
+          snapshot.docs
+              .map((doc) => Task.fromJson(doc.data()))
+              .where((task) => task.completedAt == null)
+              .toList();
+
+      // Sort by createdAt in code
+      tasks.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+
+      return tasks;
+    } catch (e) {
+      debugPrint('Error getting active tasks: $e');
+      return [];
+    }
+  }
+
+  Future<List<Task>> getCompletedTasks(String userId) async {
+    try {
+      final snapshot =
+          await _firestore
+              .collection(tasksCollection)
+              .where('userId', isEqualTo: userId)
+              .get();
+
+      // Filter and sort in code
+      final tasks =
+          snapshot.docs
+              .map((doc) => Task.fromJson(doc.data()))
+              .where((task) => task.completedAt != null)
+              .toList();
+
+      // Sort by completedAt in code
+      tasks.sort((a, b) => b.completedAt!.compareTo(a.completedAt!));
+
+      return tasks;
+    } catch (e) {
+      debugPrint('Error getting completed tasks: $e');
+      return [];
+    }
+  }
+
+  Future<List<Task>> getUserTasks(String userId) async {
+    try {
+      final snapshot =
+          await _firestore
+              .collection(tasksCollection)
+              .where('userId', isEqualTo: userId)
+              .get();
+
+      final tasks =
+          snapshot.docs.map((doc) => Task.fromJson(doc.data())).toList();
+
+      // Sort by createdAt in code
+      tasks.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+
+      return tasks;
+    } catch (e) {
+      debugPrint('Error getting user tasks: $e');
+      return [];
+    }
+  }
+
+  Stream<List<Task>> streamActiveTasks(String userId) {
+    return _firestore
         .collection(tasksCollection)
         .where('userId', isEqualTo: userId)
-        .get();
+        .snapshots()
+        .map((snapshot) {
+          final tasks =
+              snapshot.docs
+                  .map((doc) => Task.fromJson(doc.data()))
+                  .where((task) => task.completedAt == null)
+                  .toList();
 
-    // Filter and sort in code
-    final tasks = snapshot.docs
-        .map((doc) => Task.fromJson(doc.data()))
-        .where((task) => task.completedAt == null)
-        .toList();
-    
-    // Sort by createdAt in code
-    tasks.sort((a, b) => b.createdAt.compareTo(a.createdAt));
-    
-    return tasks;
-  } catch (e) {
-    debugPrint('Error getting active tasks: $e');
-    return [];
+          // Sort by createdAt in code
+          tasks.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+
+          return tasks;
+        });
   }
-}
 
-Future<List<Task>> getCompletedTasks(String userId) async {
-  try {
-    final snapshot = await _firestore
+  Stream<List<Task>> streamCompletedTasks(String userId) {
+    return _firestore
         .collection(tasksCollection)
         .where('userId', isEqualTo: userId)
-        .get();
+        .snapshots()
+        .map((snapshot) {
+          final tasks =
+              snapshot.docs
+                  .map((doc) => Task.fromJson(doc.data()))
+                  .where((task) => task.completedAt != null)
+                  .toList();
 
-    // Filter and sort in code
-    final tasks = snapshot.docs
-        .map((doc) => Task.fromJson(doc.data()))
-        .where((task) => task.completedAt != null)
-        .toList();
-    
-    // Sort by completedAt in code
-    tasks.sort((a, b) => b.completedAt!.compareTo(a.completedAt!));
-    
-    return tasks;
-  } catch (e) {
-    debugPrint('Error getting completed tasks: $e');
-    return [];
+          // Sort by completedAt in code
+          tasks.sort((a, b) => b.completedAt!.compareTo(a.completedAt!));
+
+          return tasks;
+        });
   }
-}
-
-Future<List<Task>> getUserTasks(String userId) async {
-  try {
-    final snapshot = await _firestore
-        .collection(tasksCollection)
-        .where('userId', isEqualTo: userId)
-        .get();
-
-    final tasks = snapshot.docs
-        .map((doc) => Task.fromJson(doc.data()))
-        .toList();
-    
-    // Sort by createdAt in code
-    tasks.sort((a, b) => b.createdAt.compareTo(a.createdAt));
-    
-    return tasks;
-  } catch (e) {
-    debugPrint('Error getting user tasks: $e');
-    return [];
-  }
-}
-
-Stream<List<Task>> streamActiveTasks(String userId) {
-  return _firestore
-      .collection(tasksCollection)
-      .where('userId', isEqualTo: userId)
-      .snapshots()
-      .map((snapshot) {
-        final tasks = snapshot.docs
-            .map((doc) => Task.fromJson(doc.data()))
-            .where((task) => task.completedAt == null)
-            .toList();
-        
-        // Sort by createdAt in code
-        tasks.sort((a, b) => b.createdAt.compareTo(a.createdAt));
-        
-        return tasks;
-      });
-}
-
-Stream<List<Task>> streamCompletedTasks(String userId) {
-  return _firestore
-      .collection(tasksCollection)
-      .where('userId', isEqualTo: userId)
-      .snapshots()
-      .map((snapshot) {
-        final tasks = snapshot.docs
-            .map((doc) => Task.fromJson(doc.data()))
-            .where((task) => task.completedAt != null)
-            .toList();
-        
-        // Sort by completedAt in code
-        tasks.sort((a, b) => b.completedAt!.compareTo(a.completedAt!));
-        
-        return tasks;
-      });
-}
-
 
   // ========== TASK METHODS (unchanged) ==========
-  
+
   Future<Task?> createTask(Task task) async {
     try {
       final docRef = _firestore.collection(tasksCollection).doc();
       final taskWithId = task.copyWith(uid: docRef.id);
-      
+
       await docRef.set(taskWithId.toJson());
       return taskWithId;
     } catch (e) {
@@ -131,10 +137,8 @@ Stream<List<Task>> streamCompletedTasks(String userId) {
 
   Future<Task?> getTask(String taskId) async {
     try {
-      final doc = await _firestore
-          .collection(tasksCollection)
-          .doc(taskId)
-          .get();
+      final doc =
+          await _firestore.collection(tasksCollection).doc(taskId).get();
 
       if (doc.exists) {
         return Task.fromJson(doc.data()!);
@@ -148,10 +152,9 @@ Stream<List<Task>> streamCompletedTasks(String userId) {
 
   Future<bool> completeTask(String taskId) async {
     try {
-      await _firestore
-          .collection(tasksCollection)
-          .doc(taskId)
-          .update({'completedAt': FieldValue.serverTimestamp()});
+      await _firestore.collection(tasksCollection).doc(taskId).update({
+        'completedAt': FieldValue.serverTimestamp(),
+      });
       return true;
     } catch (e) {
       debugPrint('Error completing task: $e');
@@ -174,17 +177,13 @@ Stream<List<Task>> streamCompletedTasks(String userId) {
 
   Future<bool> deleteTask(String taskId) async {
     try {
-      await _firestore
-          .collection(tasksCollection)
-          .doc(taskId)
-          .delete();
+      await _firestore.collection(tasksCollection).doc(taskId).delete();
       return true;
     } catch (e) {
       debugPrint('Error deleting task: $e');
       return false;
     }
   }
-
 
   // ========== USER METHODS ==========
 
@@ -202,13 +201,10 @@ Stream<List<Task>> streamCompletedTasks(String userId) {
     }
   }
 
-  /// Get user by ID
   Future<AppUser?> getUser(String userId) async {
     try {
-      final doc = await _firestore
-          .collection(usersCollection)
-          .doc(userId)
-          .get();
+      final doc =
+          await _firestore.collection(usersCollection).doc(userId).get();
 
       if (doc.exists) {
         return AppUser.fromJson(doc.data()!);
@@ -238,10 +234,8 @@ Stream<List<Task>> streamCompletedTasks(String userId) {
   Future<String?> addFriend(String userId, String friendId) async {
     try {
       // Get current user data
-      final userDoc = await _firestore
-          .collection(usersCollection)
-          .doc(userId)
-          .get();
+      final userDoc =
+          await _firestore.collection(usersCollection).doc(userId).get();
 
       if (!userDoc.exists) {
         return 'User not found';
@@ -260,21 +254,16 @@ Stream<List<Task>> streamCompletedTasks(String userId) {
       }
 
       // Check if friend exists
-      final friendDoc = await _firestore
-          .collection(usersCollection)
-          .doc(friendId)
-          .get();
+      final friendDoc =
+          await _firestore.collection(usersCollection).doc(friendId).get();
 
       if (!friendDoc.exists) {
         return 'Friend not found';
       }
 
       // Add friend to list
-      await _firestore
-          .collection(usersCollection)
-          .doc(userId)
-          .update({
-        'friends': FieldValue.arrayUnion([friendId])
+      await _firestore.collection(usersCollection).doc(userId).update({
+        'friends': FieldValue.arrayUnion([friendId]),
       });
 
       return null; // Success
@@ -287,11 +276,8 @@ Stream<List<Task>> streamCompletedTasks(String userId) {
   /// Remove a friend from user's friend list
   Future<String?> removeFriend(String userId, String friendId) async {
     try {
-      await _firestore
-          .collection(usersCollection)
-          .doc(userId)
-          .update({
-        'friends': FieldValue.arrayRemove([friendId])
+      await _firestore.collection(usersCollection).doc(userId).update({
+        'friends': FieldValue.arrayRemove([friendId]),
       });
 
       return null; // Success
@@ -304,10 +290,8 @@ Stream<List<Task>> streamCompletedTasks(String userId) {
   /// Get list of friend AppUser objects
   Future<List<AppUser>> getFriends(String userId) async {
     try {
-      final userDoc = await _firestore
-          .collection(usersCollection)
-          .doc(userId)
-          .get();
+      final userDoc =
+          await _firestore.collection(usersCollection).doc(userId).get();
 
       if (!userDoc.exists) {
         return [];
@@ -321,9 +305,10 @@ Stream<List<Task>> streamCompletedTasks(String userId) {
 
       // Get all friend documents
       final friendDocs = await Future.wait(
-        user.friends.map((friendId) => 
-          _firestore.collection(usersCollection).doc(friendId).get()
-        )
+        user.friends.map(
+          (friendId) =>
+              _firestore.collection(usersCollection).doc(friendId).get(),
+        ),
       );
 
       return friendDocs
@@ -345,4 +330,18 @@ Stream<List<Task>> streamCompletedTasks(String userId) {
         .map((doc) => doc.exists ? AppUser.fromJson(doc.data()!) : null);
   }
 
+Future<Map<String, String>> getDetails() async {
+  try {
+    final snapshot = await _firestore
+        .collection(detailsCollection)
+        .limit(1)
+        .get();
+    if (snapshot.docs.isEmpty) {
+      return {};} 
+    return Map<String, String>.from(snapshot.docs.first.data());
+  } catch (e) {
+      debugPrint('Error getting user details: $e');
+      return {};
+    }
+  }
 }

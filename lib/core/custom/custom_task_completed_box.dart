@@ -1,53 +1,57 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:honest/core/themes/app_colors.dart';
 import 'package:honest/core/themes/app_text_styles.dart';
 import 'package:honest/models/task.dart';
 
-class CustomTaskBox extends StatefulWidget {
+class CustomTaskCompletedBox extends StatelessWidget {
   final Task task;
-  final String? userName;
   final VoidCallback? onTap;
-  final bool isFriendTask;
 
-  const CustomTaskBox({
+  const CustomTaskCompletedBox({
     super.key,
     required this.task,
-    this.userName,
     this.onTap,
-    this.isFriendTask = false,
   });
 
-  @override
-  State<CustomTaskBox> createState() => _CustomTaskBoxState();
-}
-
-class _CustomTaskBoxState extends State<CustomTaskBox> {
-  late Timer _timer;
-  Duration _elapsed = Duration.zero;
-
-  @override
-  void initState() {
-    super.initState();
-    _calculateElapsed();
-    _timer = Timer.periodic(const Duration(seconds: 1), (_) {
-      if (mounted) {
-        setState(() {
-          _calculateElapsed();
-        });
-      }
-    });
+  // Check if task was completed successfully
+  bool get isSuccessful {
+    if (task.completedAt == null) return false;
+    
+    // If unlimited, it's always failed (shouldn't complete unlimited tasks)
+    if (task.unlimited) return false;
+    
+    // If no counter set, consider it successful
+    if (task.counter == null) return true;
+    
+    // Calculate target date based on counter and unit
+    final targetDate = _calculateTargetDate();
+    
+    // Success if completed on or after target date
+    return task.completedAt!.isAfter(targetDate) || 
+           task.completedAt!.isAtSameMomentAs(targetDate);
   }
 
-  @override
-  void dispose() {
-    _timer.cancel();
-    super.dispose();
-  }
-
-  void _calculateElapsed() {
-    _elapsed = DateTime.now().difference(widget.task.createdAt);
+  DateTime _calculateTargetDate() {
+    if (task.counter == null) return task.createdAt;
+    
+    final unit = task.countUnit?.toLowerCase() ?? 'days';
+    final counter = task.counter!;
+    
+    if (unit.contains('year')) {
+      return task.createdAt.add(Duration(days: counter * 365));
+    } else if (unit.contains('month')) {
+      return task.createdAt.add(Duration(days: counter * 30));
+    } else if (unit.contains('week')) {
+      return task.createdAt.add(Duration(days: counter * 7));
+    } else if (unit.contains('hour')) {
+      return task.createdAt.add(Duration(hours: counter));
+    } else if (unit.contains('min')) {
+      return task.createdAt.add(Duration(minutes: counter));
+    } else {
+      // Default to days
+      return task.createdAt.add(Duration(days: counter));
+    }
   }
 
   String _formatDuration(Duration duration) {
@@ -74,13 +78,19 @@ class _CustomTaskBoxState extends State<CustomTaskBox> {
     parts.add('$hours ${hours == 1 ? 'hr' : 'hrs'}');
     parts.add('$minutes ${minutes == 1 ? 'min' : 'mins'}');
     parts.add('$seconds ${seconds == 1 ? 'sec' : 'secs'}');
+    
     return parts.join(' ');
   }
 
   @override
   Widget build(BuildContext context) {
+    final success = isSuccessful;
+    final completedDuration = task.completedAt != null
+        ? task.completedAt!.difference(task.createdAt)
+        : Duration.zero;
+
     return GestureDetector(
-      onTap: widget.onTap,
+      onTap: onTap,
       child: Container(
         margin: EdgeInsets.only(bottom: 12.h),
         padding: EdgeInsets.all(16.w),
@@ -88,9 +98,9 @@ class _CustomTaskBoxState extends State<CustomTaskBox> {
           color: AppColors.surface,
           borderRadius: BorderRadius.circular(16.r),
           border: Border.all(
-            color: widget.task.isCompleted
+            color: success
                 ? AppColors.success.withOpacity(0.3)
-                : AppColors.primary.withOpacity(0.2),
+                : AppColors.error.withOpacity(0.3),
             width: 1.5,
           ),
           boxShadow: [
@@ -104,19 +114,35 @@ class _CustomTaskBoxState extends State<CustomTaskBox> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Title
-            Text(
-              widget.task.title,
-              style: AppTextStyles.h3.copyWith(
-                decoration: widget.task.isCompleted
-                    ? TextDecoration.lineThrough
-                    : null,
-                color: widget.task.isCompleted
-                    ? AppColors.textSecondary
-                    : AppColors.textPrimary,
-              ),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
+            // Title with status icon
+            Row(
+              children: [
+                // Success/Fail Icon
+                Container(
+                  width: 24.w,
+                  height: 24.w,
+                  decoration: BoxDecoration(
+                    color: success ? AppColors.success : AppColors.error,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    success ? Icons.check : Icons.close,
+                    size: 16.sp,
+                    color: Colors.white,
+                  ),
+                ),
+                SizedBox(width: 12.w),
+                Expanded(
+                  child: Text(
+                    task.title,
+                    style: AppTextStyles.h3.copyWith(
+                      color: AppColors.textPrimary,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ],
             ),
 
             SizedBox(height: 12.h),
@@ -136,9 +162,9 @@ class _CustomTaskBoxState extends State<CustomTaskBox> {
                     borderRadius: BorderRadius.circular(8.r),
                   ),
                   child: Text(
-                    widget.task.unlimited
+                    task.unlimited
                         ? 'Unlimited'
-                        : '${widget.task.counter} ${widget.task.countUnit ?? 'days'}',
+                        : '${task.counter} ${task.countUnit ?? 'days'}',
                     style: AppTextStyles.bodySmall.copyWith(
                       color: AppColors.primary,
                       fontWeight: FontWeight.w600,
@@ -146,7 +172,8 @@ class _CustomTaskBoxState extends State<CustomTaskBox> {
                   ),
                 ),
                 SizedBox(width: 8.w),
-                
+
+                // Completed Duration (Static)
                 Expanded(
                   child: Container(
                     padding: EdgeInsets.symmetric(
@@ -154,10 +181,14 @@ class _CustomTaskBoxState extends State<CustomTaskBox> {
                       vertical: 8.h,
                     ),
                     decoration: BoxDecoration(
-                      color: AppColors.success.withOpacity(0.1),
+                      color: success
+                          ? AppColors.success.withOpacity(0.1)
+                          : AppColors.error.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(8.r),
                       border: Border.all(
-                        color: AppColors.success.withOpacity(0.2),
+                        color: success
+                            ? AppColors.success.withOpacity(0.2)
+                            : AppColors.error.withOpacity(0.2),
                         width: 1,
                       ),
                     ),
@@ -169,17 +200,17 @@ class _CustomTaskBoxState extends State<CustomTaskBox> {
                           width: 6.w,
                           height: 6.w,
                           decoration: BoxDecoration(
-                            color: AppColors.success,
+                            color: success ? AppColors.success : AppColors.error,
                             shape: BoxShape.circle,
                           ),
                         ),
                         SizedBox(width: 8.w),
                         Expanded(
                           child: Text(
-                            _formatDuration(_elapsed),
+                            _formatDuration(completedDuration),
                             style: TextStyle(
                               fontSize: 11.sp,
-                              color: AppColors.success,
+                              color: success ? AppColors.success : AppColors.error,
                               fontWeight: FontWeight.w700,
                               height: 1.3,
                             ),
@@ -194,26 +225,27 @@ class _CustomTaskBoxState extends State<CustomTaskBox> {
               ],
             ),
 
-            if (widget.isFriendTask && widget.userName != null) ...[
-              SizedBox(height: 8.h),
-              Row(
-                children: [
-                  Icon(
-                    Icons.person_outline,
-                    size: 14.sp,
-                    color: AppColors.textSecondary,
-                  ),
-                  SizedBox(width: 4.w),
-                  Text(
-                    widget.userName!,
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.textSecondary,
-                      fontStyle: FontStyle.italic,
-                    ),
-                  ),
-                ],
+            // Status Label
+            SizedBox(height: 8.h),
+            Container(
+              padding: EdgeInsets.symmetric(
+                horizontal: 10.w,
+                vertical: 4.h,
               ),
-            ],
+              decoration: BoxDecoration(
+                color: success
+                    ? AppColors.success.withOpacity(0.15)
+                    : AppColors.error.withOpacity(0.15),
+                borderRadius: BorderRadius.circular(6.r),
+              ),
+              child: Text(
+                success ? 'Successfully Completed' : 'Failed to Complete',
+                style: AppTextStyles.caption.copyWith(
+                  color: success ? AppColors.success : AppColors.error,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
           ],
         ),
       ),

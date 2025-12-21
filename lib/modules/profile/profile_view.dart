@@ -12,146 +12,149 @@ class ProfileView extends GetView<ProfileController> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-           colors: [
-                AppColors.primary,
-                AppColors.primary.withOpacity(0.6),
-              ],
-          ),
-        ),
-        child: Obx(() {
-          final user = controller.user.value;
-          
-          if (user == null) {
-            return Padding(
-              padding: EdgeInsets.all(16.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(height: 40.h),
-                  Shimmer.fromColors(
-                    baseColor: Colors.white.withOpacity(0.5),
-                    highlightColor: Colors.white.withOpacity(0.2),
-                    child: CircleAvatar(
-                      radius: 50.r,
-                      backgroundColor: Colors.white,
-                    ),
-                  ),
-                  SizedBox(height: 16.h),
-                  Shimmer.fromColors(
-                    baseColor: Colors.white.withOpacity(0.5),
-                    highlightColor: Colors.white.withOpacity(0.2),
-                    child: Container(
-                      height: 20.h,
-                      width: 150.w,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(4.r),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 8.h),
-                  Shimmer.fromColors(
-                    baseColor: Colors.white.withOpacity(0.5),
-                    highlightColor: Colors.white.withOpacity(0.2),
-                    child: Container(
-                      height: 20.h,
-                      width: 200.w,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(4.r),
-                      ),
-                    ),
-                  ),
+    return Scaffold(
+      body: Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+             colors: [
+                  AppColors.primary,
+                  AppColors.primary.withOpacity(0.6),
                 ],
-              ),
-            );
-          }
-      
-          return Column(
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  padding: EdgeInsets.all(16.w),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(height: 40.h),
-                      CircleAvatar(
-                        backgroundColor: AppColors.background,
+            ),
+          ),
+          child: Obx(() {
+            final user = controller.user.value;
+            if (user == null) {
+              return Padding(
+                padding: EdgeInsets.all(16.w),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(height: 40.h),
+                    Shimmer.fromColors(
+                      baseColor: Colors.white.withOpacity(0.5),
+                      highlightColor: Colors.white.withOpacity(0.2),
+                      child: CircleAvatar(
                         radius: 50.r,
-                        backgroundImage: user.photoUrl != null
-                            ? NetworkImage(user.photoUrl!)
-                            : null,
-                        child: user.photoUrl == null
-                            ? Text(
-                                user.name != null && user.name!.isNotEmpty
-                                    ? user.name![0].toUpperCase()
-                                    : 'U',
-                                style: AppTextStyles.h1.copyWith(
-                                  color: AppColors.textPrimary,
-                                ),
-                              )
-                            : null,
+                        backgroundColor: Colors.white,
                       ),
-                      SizedBox(height: 16.h),
-                      Text(
-                        user.name ?? 'No Name',
-                        style: AppTextStyles.bodyLarge.copyWith(
+                    ),
+                    SizedBox(height: 16.h),
+                    Shimmer.fromColors(
+                      baseColor: Colors.white.withOpacity(0.5),
+                      highlightColor: Colors.white.withOpacity(0.2),
+                      child: Container(
+                        height: 20.h,
+                        width: 150.w,
+                        decoration: BoxDecoration(
                           color: Colors.white,
-                          fontWeight: FontWeight.bold,
+                          borderRadius: BorderRadius.circular(4.r),
                         ),
                       ),
-                      SizedBox(height: 8.h),
-                      Text(
-                        user.email,
-                        style: AppTextStyles.bodyMedium.copyWith(
-                          color: Colors.white.withOpacity(0.8),
+                    ),
+                    SizedBox(height: 8.h),
+                    Shimmer.fromColors(
+                      baseColor: Colors.white.withOpacity(0.5),
+                      highlightColor: Colors.white.withOpacity(0.2),
+                      child: Container(
+                        height: 20.h,
+                        width: 200.w,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(4.r),
                         ),
                       ),
-                      SizedBox(height: 12.h),
-                      CustomIconBox(text: 'Friends', icon: Icons.arrow_forward_ios, onPressed: (){}),
-                      SizedBox(height: 16.h),
-                      CustomIconBox(text: 'Rating', icon: Icons.arrow_forward_ios, onPressed: (){}),
-                      SizedBox(height: 16.h),
-                      CustomIconBox(text: 'Terms And Condition', icon: Icons.arrow_forward_ios, onPressed: (){})
-                    ],
+                    ),
+                  ],
+                ),
+              );
+            }
+        
+            return Column(
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    padding: EdgeInsets.all(16.w),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(height: 40.h),
+                        CircleAvatar(
+                          backgroundColor: AppColors.background,
+                          radius: 50.r,
+                          backgroundImage: user.photoUrl != null
+                              ? NetworkImage(user.photoUrl!)
+                              : null,
+                          child: user.photoUrl == null
+                              ? Text(
+                                  user.name != null && user.name!.isNotEmpty
+                                      ? user.name![0].toUpperCase()
+                                      : 'U',
+                                  style: AppTextStyles.h1.copyWith(
+                                    color: AppColors.textPrimary,
+                                  ),
+                                )
+                              : null,
+                        ),
+                        SizedBox(height: 16.h),
+                        Text(
+                          user.name ?? 'No Name',
+                          style: AppTextStyles.bodyLarge.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 8.h),
+                        Text(
+                          user.email,
+                          style: AppTextStyles.bodyMedium.copyWith(
+                            color: Colors.white.withOpacity(0.8),
+                          ),
+                        ),
+                        SizedBox(height: 12.h),
+                        CustomIconBox(text: 'Friends', icon: Icons.arrow_forward_ios, onPressed: (){}),
+                        SizedBox(height: 16.h),
+                        CustomIconBox(text: 'Rating', icon: Icons.arrow_forward_ios, onPressed: ()async {await controller.openLink(controller.ratings);}),
+                        SizedBox(height: 16.h),
+                        CustomIconBox(text: 'Privacy Policy', icon: Icons.arrow_forward_ios, onPressed: ()async {await controller.openLink(controller.privacyPolicy);}),
+                        SizedBox(height: 16.h),
+                        CustomIconBox(text: 'Terms And Condition', icon: Icons.arrow_forward_ios, onPressed: ()async {await controller.openLink(controller.termsAndCondition);})
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                  left: 16.w,
-                  right: 16.w,
-                  bottom: 100.h, 
-                  top: 16.h,
-                ),              
-                child: Obx(() {
-                  return controller.isLoading.value
-                      ? 
-                   CustomButton(
-                          isLoading: true,
-                          color: AppColors.textPrimary,
-                          label: 'Creating Task...',
-                          onTap: (){})
-                
-                      : CustomButton(
-                          color: AppColors.textPrimary,
-                          label: 'Sign Out',
-                          onTap: () async {
-                            await controller.signOut();
-                          },
-                        );
-                }),
-              ),
-            ],
-          );
-        }),
+                Padding(
+                  padding: EdgeInsets.only(
+                    left: 16.w,
+                    right: 16.w,
+                    bottom: 100.h, 
+                    top: 16.h,
+                  ),              
+                  child: Obx(() {
+                    return controller.isLoading.value
+                        ? 
+                     CustomButton(
+                            isLoading: true,
+                            color: AppColors.textPrimary,
+                            label: 'Creating Task...',
+                            onTap: (){})
+                  
+                        : CustomButton(
+                            color: AppColors.textPrimary,
+                            label: 'Sign Out',
+                            onTap: () async {
+                              await controller.signOut();
+                            },
+                          );
+                  }),
+                ),
+              ],
+            );
+          }),
+      ),
     );
   }
 }
