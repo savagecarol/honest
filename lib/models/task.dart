@@ -1,8 +1,9 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'task_note.dart';
 
 part 'task.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class Task {
   final String uid;
   final String userId;
@@ -14,6 +15,7 @@ class Task {
   final bool unlimited;
   final DateTime createdAt;
   final DateTime? completedAt;
+  final List<TaskNote> notes;
 
   const Task({
     required this.uid,
@@ -26,38 +28,31 @@ class Task {
     required this.unlimited,
     required this.createdAt,
     this.completedAt,
+    this.notes = const [],
   });
 
   factory Task.fromJson(Map<String, dynamic> json) => _$TaskFromJson(json);
   Map<String, dynamic> toJson() => _$TaskToJson(this);
 
-  // Helper to check if task is completed
   bool get isCompleted => completedAt != null;
 
-  // Copy with method for updates
   Task copyWith({
     String? uid,
-    String? userId,
-    String? title,
-    String? description,
-    String? postDescription,
-    String? countUnit,
-    int? counter,
-    bool? unlimited,
-    DateTime? createdAt,
+    List<TaskNote>? notes,
     DateTime? completedAt,
   }) {
     return Task(
       uid: uid ?? this.uid,
-      userId: userId ?? this.userId,
-      title: title ?? this.title,
-      description: description ?? this.description,
-      postDescription: postDescription ?? this.postDescription,
-      countUnit: countUnit ?? this.countUnit,
-      counter: counter ?? this.counter,
-      unlimited: unlimited ?? this.unlimited,
-      createdAt: createdAt ?? this.createdAt,
+      userId: userId,
+      title: title,
+      description: description,
+      postDescription: postDescription,
+      countUnit: countUnit,
+      counter: counter,
+      unlimited: unlimited,
+      createdAt: createdAt,
       completedAt: completedAt ?? this.completedAt,
+      notes: notes ?? this.notes,
     );
   }
 }

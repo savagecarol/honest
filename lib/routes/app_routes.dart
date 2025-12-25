@@ -3,4 +3,5 @@ abstract class Routes {
   static const splash = '/';
   static const signIn = '/signIn';
   static const base = '/base';
+  static const task = '/task';
 }

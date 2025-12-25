@@ -5,6 +5,8 @@ import 'package:honest/modules/base/base_binding.dart';
 import 'package:honest/modules/base/base_view.dart';
 import 'package:honest/modules/splash/splash_binding.dart';
 import 'package:honest/modules/splash/splash_view.dart';
+import 'package:honest/modules/taskView/task_view.dart';
+import 'package:honest/modules/taskView/task_view_binding.dart';
 import 'package:honest/routes/app_routes.dart';
 
 class AppPages {
@@ -25,6 +27,11 @@ class AppPages {
       name: Routes.base,
       page: () => const BaseView(),
       binding: BaseBinding(),
+    ),
+    GetPage(
+      name: Routes.task,
+      page: () => const TaskViewPage(),
+      binding: TaskViewBinding(),
     ),
   ];
 }

@@ -38,12 +38,14 @@ class AuthView extends GetView<AuthController> {
                   Obx(() {  return controller.isSigningIn.value ? 
                    CustomButton(
                           isLoading: true,
-                          color: AppColors.textPrimary,
+                          backgroundColor: AppColors.textPrimary,
+                          labelColor: AppColors.textWhite,
                           label: 'Creating Task...',
                           onTap: (){})         
                   : CustomButton(
-                    color: AppColors.textPrimary,
+                    backgroundColor: AppColors.textPrimary,
                     label: 'Sign In With Google',
+                    labelColor: AppColors.textWhite,
                     onTap: () async {
                       await controller.signInWithGoogle();
                     },

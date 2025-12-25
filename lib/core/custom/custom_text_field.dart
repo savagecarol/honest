@@ -18,6 +18,7 @@ class CustomTextField extends StatefulWidget {
   final Color? fillColor;
   final Color? focusedBorderColor;
   final double borderRadius;
+  final TextStyle? labelStyle;
 
   const CustomTextField({
     Key? key,
@@ -36,6 +37,7 @@ class CustomTextField extends StatefulWidget {
     this.fillColor,
     this.focusedBorderColor,
     this.borderRadius = 12.0,
+    this.labelStyle,
   }) : super(key: key);
 
   @override
@@ -67,7 +69,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         if (widget.showLabel && widget.labelText != null) ...[
           Text(
             widget.labelText!,
-            style: TextStyle(
+            style: widget.labelStyle ?? TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.w400,
               fontSize: 14.sp,

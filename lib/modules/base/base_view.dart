@@ -4,9 +4,9 @@ import 'package:honest/core/custom/custom_bottom_bar.dart';
 import 'package:honest/core/themes/app_colors.dart';
 import 'package:honest/modules/add/add_view.dart';
 import 'package:honest/modules/base/base_controller.dart';
+import 'package:honest/modules/completedTasks/complete_task_view.dart';
 import 'package:honest/modules/home/home_view.dart';
 import 'package:honest/modules/profile/profile_view.dart';
-import 'package:honest/modules/tasks/task_view.dart';
 
 class BaseView extends GetView<BaseController> {
   const BaseView({super.key});
@@ -27,7 +27,7 @@ class BaseView extends GetView<BaseController> {
               children: const [
                 HomeView(),
                 AddView(),
-                TaskView(),
+                CompletedTaskView(),
                 ProfileView(),
               ],
             ),

@@ -20,6 +20,11 @@ Task _$TaskFromJson(Map<String, dynamic> json) => Task(
       json['completedAt'] == null
           ? null
           : DateTime.parse(json['completedAt'] as String),
+  notes:
+      (json['notes'] as List<dynamic>?)
+          ?.map((e) => TaskNote.fromJson(e as Map<String, dynamic>))
+          .toList() ??
+      const [],
 );
 
 Map<String, dynamic> _$TaskToJson(Task instance) => <String, dynamic>{
@@ -33,4 +38,5 @@ Map<String, dynamic> _$TaskToJson(Task instance) => <String, dynamic>{
   'unlimited': instance.unlimited,
   'createdAt': instance.createdAt.toIso8601String(),
   'completedAt': instance.completedAt?.toIso8601String(),
+  'notes': instance.notes.map((e) => e.toJson()).toList(),
 };

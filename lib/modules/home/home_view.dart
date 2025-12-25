@@ -5,6 +5,7 @@ import 'package:honest/core/custom/custom_task_box.dart';
 import 'package:honest/core/themes/app_colors.dart';
 import 'package:honest/core/themes/app_text_styles.dart';
 import 'package:honest/modules/home/home_controller.dart';
+import 'package:honest/routes/app_routes.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
@@ -113,7 +114,10 @@ class HomeView extends GetView<HomeController> {
                                 return CustomTaskBox(
                                   task: task,
                                   onTap: () {
-                                    // Navigate to task details if needed
+                                    Get.toNamed(
+                                      Routes.task,
+                                      arguments: task,
+                                    );
                                   },
                                 );
                               },
@@ -194,7 +198,6 @@ class HomeView extends GetView<HomeController> {
                                     userName: friendName,
                                     isFriendTask: true,
                                     onTap: () {
-                                      // Navigate to friend task details if needed
                                     },
                                   );
                                 },

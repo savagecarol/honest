@@ -4,7 +4,7 @@ import 'package:honest/models/task.dart';
 import 'package:honest/services/auth_service.dart';
 import 'package:honest/services/firestore_service.dart';
 
-class TaskController extends GetxController {
+class CompletedTaskController extends GetxController {
   final AuthService _authService = Get.find<AuthService>();
   final FirestoreService _firestoreService = Get.find<FirestoreService>();
 
@@ -27,7 +27,6 @@ class TaskController extends GetxController {
 
   Future<void> loadMyCompletedTasks() async {
     if (currentUser == null) return;
-    
     isLoading.value = true;
     try {
       final tasks = await _firestoreService.getCompletedTasks(currentUser!.uid);

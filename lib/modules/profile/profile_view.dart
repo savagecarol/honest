@@ -138,12 +138,12 @@ class ProfileView extends GetView<ProfileController> {
                         ? 
                      CustomButton(
                             isLoading: true,
-                            color: AppColors.textPrimary,
+                            backgroundColor: AppColors.textPrimary,
                             label: 'Creating Task...',
                             onTap: (){})
                   
                         : CustomButton(
-                            color: AppColors.textPrimary,
+                            backgroundColor: AppColors.textPrimary,
                             label: 'Sign Out',
                             onTap: () async {
                               await controller.signOut();

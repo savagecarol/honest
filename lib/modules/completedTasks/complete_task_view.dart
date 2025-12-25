@@ -4,10 +4,10 @@ import 'package:get/get.dart';
 import 'package:honest/core/custom/custom_task_completed_box.dart';
 import 'package:honest/core/themes/app_colors.dart';
 import 'package:honest/core/themes/app_text_styles.dart';
-import 'package:honest/modules/tasks/task_controller.dart';
+import 'package:honest/modules/completedTasks/completed_task_controller.dart';
 
-class TaskView extends GetView<TaskController> {
-  const TaskView({super.key});
+class CompletedTaskView extends GetView<CompletedTaskController> {
+  const CompletedTaskView({super.key});
 
   @override
   Widget build(BuildContext context) {
